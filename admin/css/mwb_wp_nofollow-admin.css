@@ -1,0 +1,70 @@
+/**
+ * All of the CSS for your admin-specific functionality should be
+ * included in this file.
+ */
+  #mwb_wt_tabs
+ {
+ 	overflow: hidden;
+ 	width: 100%;
+ 	margin: 0;
+ 	border-bottom: 1px solid #ccc;
+ 	padding: 0;
+ 	list-style: none;
+ 	font:12px Segoe, "Segoe UI", "DejaVu Sans", "Trebuchet MS", Verdana, sans-serif
+ }
+ #mwb_wt_tabs li 
+ {
+ 	float: left;
+ 	margin: 0 auto;
+ }
+ #mwb_wt_tabs a 
+ {
+ 	border-bottom:none;
+ 	float: left;
+ 	border: 1px solid #ccc;
+ 	border-bottom-width: 1px;
+ 	border-bottom-style: solid;
+ 	border-bottom-color: rgb(204, 204, 204);
+ 	margin-left: .5em;
+ 	padding: 5px 10px;
+ 	font-size: 14px;
+ 	line-height: 24px;
+ 	background: #e5e5e5;
+ 	color: #555;
+ }
+ #mwb_wt_tabs a:hover, #tabs a:hover::after, #tabs a:focus, #tabs a:focus::after 
+ { 
+ 	border-bottom:none;
+ 	background: #fff;
+ 	color: #000;
+ }
+ #mwb_wt_tabs a:focus
+ {
+ 	outline: 0;
+ }
+ #mwb_wt_tabs a::after 
+ {
+ 	content: '';
+ 	position: absolute;
+ 	z-index: 1;
+ 	top: 0;
+ 	right: -.5em;
+ 	bottom: 0;	
+ 	width: 0.2em;
+ 	background-color: rgb(241, 241, 241);
+ }
+ #mwb_wt_tabs #mwb_wt_current
+ {
+ 	border-bottom: 1px solid #f1f1f1;
+ 	background: #f1f1f1;
+ 	background-color: rgb(241, 241, 241);
+ 	color: #000;
+ }
+ a
+ {
+ 	text-decoration: none;
+ }
+ .mwb_form_class
+ {
+ 	margin-left: 10px;
+ }
