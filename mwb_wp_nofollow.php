@@ -13,9 +13,9 @@
  * @package           Mwb_wp_nofollow
  *
  * @wordpress-plugin
- * Plugin Name:       WP Add Atrributes
+ * Plugin Name:       Wordpress Nofollow Links
  * Plugin URI:        https://makewebbetter.com
- * Description:       This is a short description of what the plugin does. It's displayed in the WordPress admin area.
+ * Description:       This plugin is used for SEO purposes.
  * Version:           1.0.0
  * Author:            makewebbetter
  * Author URI:        https://makewebbetter.com

@@ -96,7 +96,6 @@ class Mwb_wp_nofollow_Admin {
 		 * class.
 		 */
 
-	//wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/mwb_wp_nofollow-admin.js', array( 'jquery' ), $this->version, false );
 		$mwb_wn_rel_activation=get_option("mwb_add_rel_link");
 	    $mwb_wn_rel_internal_activation=get_option("mwb_add_rel_internal_link");
  		$mwb_wn_alt_activation=get_option("mwb_add_alt_image");
@@ -111,10 +110,7 @@ class Mwb_wp_nofollow_Admin {
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/mwb_wn_nofollow-setting.js', array( 'jquery' ), $this->version, false );
   		wp_localize_script($this->plugin_name, "mwb_wt",$mwb_wt_external_value);
 
-		/*wp_deregister_script('wplink');
-		wp_enqueue_script( 'wplink', plugin_dir_url( __FILE__ ) . 'js/mwb_wn_wplink.js', array( 'jquery' ), $this->version, false );
-
-        wp_localize_script('wplink', 'mwb_link', array('title' => __('Insert/edit link'), 'update' => __('Update'), 'save' => __('Add Link'), 'noTitle' => __('(no title)'), 'noMatchesFound' => __('No matches found.') ));*/
+		
 
 	}
 function mwb_wn_request_callback()
@@ -126,7 +122,7 @@ function mwb_wn_request_callback()
 }	
 function mwb_wn_add_alt()
 {
-	add_menu_page('My Page Title', 'Add attributes', 'manage_options', 'mwb_menu', array($this,'mwb_wt_menu_output') );
+	add_menu_page('Add attributes to tags', 'Add attributes', 'manage_options', 'mwb_menu', array($this,'mwb_wt_menu_output') );
 }
 function mwb_wt_menu_output()
 {
@@ -164,7 +160,7 @@ function mwb_wt_menu_output()
 	if(isset($mwb_wn_alt_activation)&&isset($mwb_wn_rel_activation)&&isset($mwb_wn_alt_internal_activation))
 	?>
 	<div class="notice notice-success is-dismissible"><p>Settings saved</p></div>
-	<form method="post"><br>
+	<form method="post" class="form-class"><br>
 		<input type="checkbox" name="mwb_add_alt_image" id="mwb_add_alt_image" <?php echo $mwb_wn_checked_image;?>>
 		<span id="mwb_checkbox_text">Add/Remove alt to image</span>
 		<br><br>

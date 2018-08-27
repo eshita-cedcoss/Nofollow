@@ -130,7 +130,6 @@ class Mwb_wp_nofollow_Public {
 				}
 			}
 		}
-		echo "alt=>".$mwb_wn_enable_alt_attribute;
 		if($mwb_wn_enable_alt_attribute=="off")
 		{
 			global $post;
@@ -146,13 +145,11 @@ class Mwb_wp_nofollow_Public {
 				}
 			}
 		}
-		echo "\nrel=>".$mwb_wn_enable_rel_attribute;
 		if($mwb_wn_enable_rel_attribute=="on")
 		{
 		
          $content= preg_replace_callback('/<a[^>]+/', 'mwb_wn_nofollow_callback', $content);					 
 		}
-		echo "\ndisable=>".$mwb_wn_disable_rel_link;
 		if($mwb_wn_disable_rel_link=="on")
 		{
          $content= preg_replace_callback('/<a[^>]+/', 'mwb_wn_remove_nofollow_callback', $content);					 
