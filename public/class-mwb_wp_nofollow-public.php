@@ -99,19 +99,19 @@ class Mwb_wp_nofollow_Public {
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/mwb_wp_nofollow-public.js', array( 'jquery' ), $this->version, false );
 
 	}
-/*Function to add/remove  alt to images and rel=nofollow to links*/
+     /*Function to add/remove  alt to images and rel=nofollow to links*/
 	function mwb_wn_the_content($text) {
 
 		$post_id=get_the_Id();
 		$mwb_wn_enable_alt_attribute=get_option("mwb_add_alt_image",true);
 		$mwb_wn_enable_rel_attribute=get_option("mwb_add_rel_link");
-		$mwb_wn_rel_internal_activation=get_option("mwb_add_rel_internal_link");
+		$mwb_wn_enable_rel_all_attribute=get_option("mwb_add_rel_internal_link");
 		$mwb_wn_disable_rel_link=get_option("mwb_remove_rel_link");
 		$content=$text;
-		if($mwb_wn_rel_internal_activation=="on")
+		if($mwb_wn_enable_rel_all_attribute=="on")
 		{
 
-			$content= preg_replace_callback('/<a[^>]+/', 'mwb_wn_nofollow_internal_callback', $content);
+			$content= preg_replace_callback('/<a[^>]+/', 'mwb_wn_nofollow_all_callback', $content);
 		}
 		if($mwb_wn_enable_alt_attribute=="on")
 		{
@@ -161,33 +161,176 @@ class Mwb_wp_nofollow_Public {
 		     );
 		wp_update_post( $my_post );
 		return $content;
-		}
+	}
 	
 }
-function mwb_wn_nofollow_callback($matches) {
-    $link = $matches[0];
-    $site_link = get_bloginfo('url');
 
-    if (strpos($link, 'rel') === false) {
-    $link = preg_replace("%(href=\S(?!$site_link))%i", 'rel="nofollow" $1', $link);
-     } 
-    elseif (preg_match("%href=\S(?!$site_link)%i", $link)) {
-      $link = preg_replace('/rel=\S(?!nofollow)\S*/i', 'rel="nofollow"', $link);
-   }
-    return $link;
-}
-function mwb_wn_nofollow_internal_callback($matches)
-{
-	$link = $matches[0];
-    if (strpos($link, 'rel') === false) {
-     $link = preg_replace("%(href=\S)%i", 'rel="nofollow" $1', $link);
+	/*****Adding the rel=nofollow to external links*****/
+	function mwb_wn_nofollow_callback($matches) {
+	    $link = $matches[0];
+	    $site_link = get_bloginfo('url');
+	   if(strpos($link,$site_link)===false)
+	    {
+		   	if(strpos($link,'rel')===false)
+		   	{
+		   	  $link = preg_replace("%(href=\S(?!$site_link))%i", 'rel="nofollow" $1', $link);
+		   		
+		   	}
+		   	if(strpos($link,'rel')>0)
+		   	{	$length=strlen($link);
+		   		$count=0;
+		   		$rel_pos=strpos($link,'rel');
 
-    }
-    return $link;
-}
-function mwb_wn_remove_nofollow_callback($matches)
-{
-	$link = $matches[0];
-    $link = preg_replace('/rel="nofollow"/', null, $link);
-    return $link;
-}
+	   		    for($x=$rel_pos;$x<$length;$x++)
+	   		    {
+	   		    	$rel_after_link[$count]=$link[$x];
+	   		    	$count++;
+	   		    }
+	   		    $rel_after_link=implode($rel_after_link);
+		   		  
+				  $count=0;
+
+				    if (strpos($link, 'rel')>0) {
+				       $pos=strpos($rel_after_link, '"');
+
+				       $pos_find=$rel_pos+$pos;
+					    for($x=$pos_find+1;$x<=$length;$x++)
+					    {
+					    $substring[$count]=$link[$x];
+					    $count++;
+					    }
+				   } 
+				  $substring = implode($substring);
+				  
+				  $pos2=strpos($substring, '"');
+				  
+				  
+				   $count=0;
+				   for($x=0;$x<$pos2;$x++)
+				   {
+				   	 $sub[$count]=$substring[$x];
+					    $count++;
+				   }
+				   $sub=implode($sub);
+				  
+				   $length_substring=strlen($sub);
+
+				  // $length_substring=$pos+$length_substring;
+
+				   $count=0;
+				   for($x=1;$x<$rel_pos+5;$x++)
+				   {
+				   	$initial_string[$count]=$link[$x];
+				   	$count++;
+				   }
+
+				   $count=0;
+				   for($x=$rel_pos+5+$length_substring;$x<=$length;$x++)
+				   {
+				   	$remaining_string[$count]=$link[$x];
+				   	$count++;
+				   }
+				   $s="nofollow"." ";
+				   $start="<";
+				   $remaining_string=implode($remaining_string);
+				   $initial_string=implode($initial_string);
+				 
+				   
+				   
+				   
+				   if(strpos($sub,'nofollow') === false)
+				   { 		
+
+				   	$link=$start.$initial_string.$s.$sub.$remaining_string; 		
+				   }
+		   	  
+		   	} 
+	    }
+	return $link;
+	}
+
+	/*****Adding the rel=nofollow to all links*****/
+	function mwb_wn_nofollow_all_callback($matches)
+	{
+		$link = $matches[0];
+		 $site_link = get_bloginfo('url');
+	   	if(strpos($link,'rel')===false)
+	   	{
+	   	    $link = preg_replace("/<a/", '<a rel="nofollow"', $link);
+	   	}
+  	  	if(strpos($link,'rel')>0)
+		  {	$length=strlen($link);
+		   		$count=0;
+		   		$rel_pos=strpos($link,'rel');
+
+	   		    for($x=$rel_pos;$x<$length;$x++)
+	   		    {
+	   		    	$rel_after_link[$count]=$link[$x];
+	   		    	$count++;
+	   		    }
+	   		    $rel_after_link=implode($rel_after_link);
+		   		  
+				  $count=0;
+
+				    if (strpos($link, 'rel')>0) {
+				       $pos=strpos($rel_after_link, '"');
+
+				       $pos_find=$rel_pos+$pos;
+					    for($x=$pos_find+1;$x<=$length;$x++)
+					    {
+					    $substring[$count]=$link[$x];
+					    $count++;
+					    }
+				   } 
+				  $substring = implode($substring);
+				  
+				  $pos2=strpos($substring, '"');
+				  
+				  
+				   $count=0;
+				   for($x=0;$x<$pos2;$x++)
+				   {
+				   	 $sub[$count]=$substring[$x];
+					    $count++;
+				   }
+				   $sub=implode($sub);
+				  
+				   $length_substring=strlen($sub);
+				   $count=0;
+				   for($x=1;$x<$rel_pos+5;$x++)
+				   {
+				   	$initial_string[$count]=$link[$x];
+				   	$count++;
+				   }
+
+				   $count=0;
+				   for($x=$rel_pos+5+$length_substring;$x<=$length;$x++)
+				   {
+				   	$remaining_string[$count]=$link[$x];
+				   	$count++;
+				   }
+				   $s="nofollow"." ";
+				   $start="<";
+				   $remaining_string=implode($remaining_string);
+				   $initial_string=implode($initial_string);
+				 
+				   
+				   
+				   
+				   if(strpos($sub,'nofollow') === false)
+				   { 		
+
+				   	$link=$start.$initial_string.$s.$sub.$remaining_string; 		
+				   }
+		   	  
+		   	} 
+	    return $link;
+	}
+
+	/*****Removing the rel=nofollow from alll links*****/
+	function mwb_wn_remove_nofollow_callback($matches)
+	{
+		$link = $matches[0];
+		$link = str_replace("nofollow",null,$link);
+	    return $link;
+	}

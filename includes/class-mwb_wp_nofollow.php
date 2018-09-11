@@ -67,8 +67,8 @@ class Mwb_wp_nofollow {
 	 * @since    1.0.0
 	 */
 	public function __construct() {
-		if ( defined( 'PLUGIN_NAME_VERSION' ) ) {
-			$this->version = PLUGIN_NAME_VERSION;
+		if ( defined( 'MWB_NF_NAME_VERSION' ) ) {
+			$this->version = MWB_NF_NAME_VERSION;
 		} else {
 			$this->version = '1.0.0';
 		}
@@ -156,8 +156,8 @@ class Mwb_wp_nofollow {
 
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
 		$this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
-		$this->loader->add_action( 'admin_menu', $plugin_admin, 'mwb_wn_add_alt');
-		$this->loader->add_action( 'init', $plugin_admin, 'mwb_wn_save_alt');
+		$this->loader->add_action( 'admin_menu', $plugin_admin, 'mwb_wn_add_att');
+		$this->loader->add_action( 'init', $plugin_admin, 'mwb_wn_save_att');
 		$this->loader->add_action( 'wp_ajax_mwb_wn_request', $plugin_admin, 'mwb_wn_request_callback' );
 	}
 

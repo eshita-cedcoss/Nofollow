@@ -30,7 +30,17 @@ class Mwb_wp_nofollow_Activator {
 	 * @since    1.0.0
 	 */
 	public static function activate() {
-
+		if (is_multisite()) 
+		{
+			if (is_plugin_active_for_network(__FILE__)) 
+			{
+				$blogids = $wpdb->get_col("SELECT blog_id FROM $wpdb->blogs");
+				foreach ($blogids as $blog_id) 
+				{
+     				switch_to_blog($blog_id);
+					restore_current_blog();
+				}
+			}
+		}
 	}
-
 }

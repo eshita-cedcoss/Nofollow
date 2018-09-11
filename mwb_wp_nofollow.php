@@ -19,8 +19,8 @@
  * Version:           1.0.0
  * Author:            makewebbetter
  * Author URI:        https://makewebbetter.com
- * License:           GPL-2.0+
- * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
+ * License:           GPL-3.0+
+ * License URI:       http://www.gnu.org/licenses/gpl-3.0.txt
  * Text Domain:       mwb_wp_nofollow
  * Domain Path:       /languages
  */
@@ -35,7 +35,7 @@ if ( ! defined( 'WPINC' ) ) {
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define( 'PLUGIN_NAME_VERSION', '1.0.0' );
+define( 'MWB_NF_NAME_VERSION', '1.0.0' );
 define('MWB_NF_DIR_URL',plugin_dir_url( __FILE__ ));
 define('MWB_NF_DIR_PATH',plugin_dir_path(__FILE__));
 /**
